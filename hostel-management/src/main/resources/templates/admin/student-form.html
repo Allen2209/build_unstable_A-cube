@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container">
+    <div th:replace="~{fragments :: alerts}"></div>
+    <div class="panel">
+        <h2 th:text="${student.id == null} ? 'Add Student' : 'Edit Student'">Student</h2>
+        <form th:action="@{/admin/students/save}" th:object="${student}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <label>Full Name</label>
+            <input type="text" th:field="*{name}">
+            <span class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+            <label>Email</label>
+            <input type="email" th:field="*{email}">
+            <span class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+            <label>Contact Number</label>
+            <input type="text" th:field="*{phone}" maxlength="10">
+            <span class="field-error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+
+            <label>Department</label>
+            <input type="text" th:field="*{department}">
+
+            <label th:text="${student.id == null} ? 'Password' : 'New Password (leave blank to keep the old one)'">Password</label>
+            <input type="password" name="password">
+            <span class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
+            <br><br>
+            <button class="btn" type="submit">Save</button>
+            <a class="btn gray" th:href="@{/admin/students}">Cancel</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

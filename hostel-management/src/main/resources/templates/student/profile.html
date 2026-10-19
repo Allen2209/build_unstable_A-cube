@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container">
+    <div th:replace="~{fragments :: alerts}"></div>
+    <div class="panel">
+        <h2>My Profile</h2>
+        <form th:action="@{/student/profile}" method="post">
+            <label>Full Name</label>
+            <input type="text" name="name" th:value="${student.name}" required>
+            <label>Email (login id)</label>
+            <input type="email" name="email" th:value="${student.email}" required>
+            <label>Contact Number</label>
+            <input type="text" name="phone" th:value="${student.phone}" maxlength="10" required>
+            <label>Department</label>
+            <input type="text" name="department" th:value="${student.department}">
+            <br><br>
+            <button class="btn" type="submit">Update Profile</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

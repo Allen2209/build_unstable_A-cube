@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container">
+    <div th:replace="~{fragments :: alerts}"></div>
+    <h2>Administrator Dashboard</h2>
+    <div class="cards">
+        <div class="card"><h3>Total Rooms</h3><p class="big" th:text="${totalRooms}">0</p></div>
+        <div class="card"><h3>Available Rooms</h3><p class="big" th:text="${availableRooms}">0</p></div>
+        <div class="card"><h3>Students</h3><p class="big" th:text="${totalStudents}">0</p></div>
+    </div>
+    <div class="cards">
+        <div class="card"><h3>Pending Room Requests</h3><p class="big" th:text="${pendingRequests}">0</p></div>
+        <div class="card"><h3>Open Complaints</h3><p class="big" th:text="${openComplaints}">0</p></div>
+    </div>
+</div>
+</body>
+</html>

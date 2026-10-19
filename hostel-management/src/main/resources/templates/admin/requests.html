@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Room Requests</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container">
+    <div th:replace="~{fragments :: alerts}"></div>
+    <h2>Room Allocation Requests</h2>
+    <table>
+        <tr><th>Student</th><th>Email</th><th>Room</th><th>Date</th><th>Status</th><th>Action</th></tr>
+        <tr th:each="r : ${requests}">
+            <td th:text="${r.student.name}"></td>
+            <td th:text="${r.student.email}"></td>
+            <td th:text="${r.room.roomNumber}"></td>
+            <td th:text="${r.requestDate}"></td>
+            <td><span class="badge" th:classappend="${'b-' + r.status}" th:text="${r.status}"></span></td>
+            <td>
+                <div class="row-form" th:if="${r.status.name() == 'PENDING'}">
+                    <form th:action="@{/admin/requests/approve/{id}(id=${r.id})}" method="post">
+                        <button class="btn small green" type="submit">Approve</button>
+                    </form>
+                    <form th:action="@{/admin/requests/reject/{id}(id=${r.id})}" method="post">
+                        <button class="btn small red" type="submit">Reject</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(requests)}"><td colspan="6">No room requests available.</td></tr>
+    </table>
+</div>
+</body>
+</html>

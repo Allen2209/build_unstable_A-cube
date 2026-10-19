@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<!-- Navigation bar shown on every page after login -->
+<nav th:fragment="navbar" class="navbar">
+    <span class="brand">Hostel Management System</span>
+    <div>
+        <th:block sec:authorize="hasRole('STUDENT')">
+            <a th:href="@{/student/dashboard}">Dashboard</a>
+            <a th:href="@{/student/rooms}">Available Rooms</a>
+            <a th:href="@{/student/requests}">My Requests</a>
+            <a th:href="@{/student/complaints}">Complaints</a>
+            <a th:href="@{/student/profile}">Profile</a>
+        </th:block>
+        <th:block sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/admin/dashboard}">Dashboard</a>
+            <a th:href="@{/admin/rooms}">Rooms</a>
+            <a th:href="@{/admin/students}">Students</a>
+            <a th:href="@{/admin/requests}">Requests</a>
+            <a th:href="@{/admin/complaints}">Complaints</a>
+        </th:block>
+        <form th:action="@{/logout}" method="post" class="inline">
+            <button type="submit" class="link-btn">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<!-- Success / error messages -->
+<div th:fragment="alerts">
+    <div class="alert success" th:if="${success}" th:text="${success}"></div>
+    <div class="alert error" th:if="${error}" th:text="${error}"></div>
+</div>
+
+</body>
+</html>

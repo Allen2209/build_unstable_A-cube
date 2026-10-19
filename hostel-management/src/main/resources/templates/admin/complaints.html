@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Complaints</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container">
+    <div th:replace="~{fragments :: alerts}"></div>
+    <h2>Student Complaints</h2>
+    <table>
+        <tr><th>Date</th><th>Student</th><th>Category</th><th>Description</th><th>Status</th><th>Update Status / Remarks</th></tr>
+        <tr th:each="c : ${complaints}">
+            <td th:text="${c.createdDate}"></td>
+            <td th:text="${c.student.name}"></td>
+            <td th:text="${c.category}"></td>
+            <td th:text="${c.description}"></td>
+            <td><span class="badge" th:classappend="${'b-' + c.status}" th:text="${c.status}"></span></td>
+            <td>
+                <form class="row-form" th:action="@{/admin/complaints/update/{id}(id=${c.id})}" method="post">
+                    <select name="status">
+                        <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"
+                                th:selected="${s == c.status}"></option>
+                    </select>
+                    <input type="text" name="remarks" th:value="${c.remarks}" placeholder="Remarks">
+                    <button class="btn small" type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(complaints)}"><td colspan="6">No complaints received.</td></tr>
+    </table>
+</div>
+</body>
+</html>

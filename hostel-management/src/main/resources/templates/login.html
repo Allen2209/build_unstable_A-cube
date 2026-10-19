@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Hostel Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="auth-box">
+    <h2>Hostel Management System</h2>
+    <p>Please log in to continue</p>
+
+    <div class="alert error" th:if="${param.error}">Invalid email or password</div>
+    <div class="alert success" th:if="${param.logout}">You have been logged out</div>
+    <div class="alert success" th:if="${param.registered}">Registration successful. Please log in</div>
+    <div class="alert success" th:if="${param.emailChanged}">Email updated. Please log in with your new email</div>
+
+    <form th:action="@{/login}" method="post">
+        <label>Email</label>
+        <input type="email" name="username" required>
+        <label>Password</label>
+        <input type="password" name="password" required>
+        <br><br>
+        <button class="btn" type="submit">Login</button>
+    </form>
+    <p>New student? <a th:href="@{/register}">Register here</a></p>
+</div>
+</body>
+</html>

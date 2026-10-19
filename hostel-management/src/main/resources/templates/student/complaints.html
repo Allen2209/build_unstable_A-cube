@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Complaints</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container">
+    <div th:replace="~{fragments :: alerts}"></div>
+
+    <div class="panel">
+        <h2>Submit a Complaint</h2>
+        <form th:action="@{/student/complaints}" method="post">
+            <label>Category</label>
+            <select name="category">
+                <option>Maintenance</option>
+                <option>Water Supply</option>
+                <option>Electricity</option>
+                <option>Cleanliness</option>
+                <option>Other</option>
+            </select>
+            <label>Description</label>
+            <textarea name="description" rows="3" maxlength="500" required></textarea>
+            <br><br>
+            <button class="btn" type="submit">Submit Complaint</button>
+        </form>
+    </div>
+
+    <h2>My Complaints</h2>
+    <table>
+        <tr><th>Date</th><th>Category</th><th>Description</th><th>Status</th><th>Admin Remarks</th></tr>
+        <tr th:each="c : ${complaints}">
+            <td th:text="${c.createdDate}"></td>
+            <td th:text="${c.category}"></td>
+            <td th:text="${c.description}"></td>
+            <td><span class="badge" th:classappend="${'b-' + c.status}" th:text="${c.status}"></span></td>
+            <td th:text="${c.remarks}"></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(complaints)}"><td colspan="5">No complaints submitted.</td></tr>
+    </table>
+</div>
+</body>
+</html>

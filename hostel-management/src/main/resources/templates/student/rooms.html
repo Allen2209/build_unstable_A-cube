@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Available Rooms</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container">
+    <div th:replace="~{fragments :: alerts}"></div>
+    <h2>Available Rooms</h2>
+    <table>
+        <tr><th>Room No</th><th>Capacity</th><th>Free Beds</th><th>Facilities</th><th>Action</th></tr>
+        <tr th:each="room : ${rooms}">
+            <td th:text="${room.roomNumber}"></td>
+            <td th:text="${room.capacity}"></td>
+            <td th:text="${room.capacity - room.occupied}"></td>
+            <td th:text="${room.facilities}"></td>
+            <td>
+                <form th:action="@{/student/rooms/{id}/request(id=${room.id})}" method="post">
+                    <button class="btn small" type="submit">Request Room</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(rooms)}"><td colspan="5">No rooms are available right now.</td></tr>
+    </table>
+</div>
+</body>
+</html>

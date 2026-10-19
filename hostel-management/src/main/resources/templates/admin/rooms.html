@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Rooms</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container">
+    <div th:replace="~{fragments :: alerts}"></div>
+    <div class="top-bar">
+        <h2>Hostel Rooms</h2>
+        <a class="btn" th:href="@{/admin/rooms/new}">+ Add Room</a>
+    </div>
+    <table>
+        <tr><th>Room No</th><th>Capacity</th><th>Occupied</th><th>Facilities</th><th>Active</th><th>Actions</th></tr>
+        <tr th:each="room : ${rooms}">
+            <td th:text="${room.roomNumber}"></td>
+            <td th:text="${room.capacity}"></td>
+            <td th:text="${room.occupied}"></td>
+            <td th:text="${room.facilities}"></td>
+            <td th:text="${room.active} ? 'Yes' : 'No'"></td>
+            <td>
+                <div class="row-form">
+                    <a class="btn small" th:href="@{/admin/rooms/edit/{id}(id=${room.id})}">Edit</a>
+                    <form th:action="@{/admin/rooms/delete/{id}(id=${room.id})}" method="post"
+                          onsubmit="return confirm('Delete this room?')">
+                        <button class="btn small red" type="submit">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(rooms)}"><td colspan="6">No rooms added yet.</td></tr>
+    </table>
+</div>
+</body>
+</html>

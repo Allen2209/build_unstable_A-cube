@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Room Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container">
+    <div th:replace="~{fragments :: alerts}"></div>
+    <div class="panel">
+        <h2 th:text="${room.id == null} ? 'Add Room' : 'Edit Room'">Room</h2>
+        <form th:action="@{/admin/rooms/save}" th:object="${room}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <label>Room Number</label>
+            <input type="text" th:field="*{roomNumber}">
+            <span class="field-error" th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}"></span>
+
+            <label>Capacity</label>
+            <input type="number" min="1" th:field="*{capacity}">
+            <span class="field-error" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></span>
+
+            <label>Facilities</label>
+            <input type="text" th:field="*{facilities}">
+
+            <label><input type="checkbox" th:field="*{active}"> Active (available for allocation)</label>
+
+            <br>
+            <button class="btn" type="submit">Save</button>
+            <a class="btn gray" th:href="@{/admin/rooms}">Cancel</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

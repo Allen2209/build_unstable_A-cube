@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Requests</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container">
+    <div th:replace="~{fragments :: alerts}"></div>
+    <h2>My Room Requests / Allocation Status</h2>
+    <table>
+        <tr><th>Room No</th><th>Facilities</th><th>Request Date</th><th>Status</th></tr>
+        <tr th:each="r : ${requests}">
+            <td th:text="${r.room.roomNumber}"></td>
+            <td th:text="${r.room.facilities}"></td>
+            <td th:text="${r.requestDate}"></td>
+            <td><span class="badge" th:classappend="${'b-' + r.status}" th:text="${r.status}"></span></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(requests)}"><td colspan="4">You have not requested any room yet.</td></tr>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments :: navbar}"></div>
+<div class="container">
+    <div th:replace="~{fragments :: alerts}"></div>
+    <h2>Welcome, <span th:text="${student.name}">Student</span></h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Room Allocation</h3>
+            <div th:if="${allocation != null}">
+                <p class="big" th:text="'Room ' + ${allocation.room.roomNumber}">Room 101</p>
+                <small th:text="${allocation.room.facilities}"></small>
+            </div>
+            <p th:if="${allocation == null}">No room allocated yet.</p>
+        </div>
+        <div class="card">
+            <h3>Pending Requests</h3>
+            <p class="big" th:text="${pendingCount}">0</p>
+        </div>
+        <div class="card">
+            <h3>My Complaints</h3>
+            <p class="big" th:text="${complaintCount}">0</p>
+        </div>
+    </div>
+
+    <a class="btn" th:href="@{/student/rooms}">View Available Rooms</a>
+    <a class="btn gray" th:href="@{/student/complaints}">Submit a Complaint</a>
+</div>
+</body>
+</html>
